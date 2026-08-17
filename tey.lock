@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "kex": {"requirement": ">= 0.3.0", "version": "0.3.4"},
+  "otp": {"requirement": "", "release": 29},
+  "deps": {
+    "greet": {"git": "https://github.com/kexhq/greet", "resolved": "refs/tags/v0.1.0", "commit": "40978fabc4742c8197be5e17ba0a990aa0119c47", "sha256": "101bfa5fcefc80eedab7a6d50d43c6a8379e13d734f17356e78f46b569a477f3", "groups": []}
+  }
+}

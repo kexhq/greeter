@@ -1,0 +1,11 @@
+# Greet someone by name — or the world, if no name is given.
+using Greet
+
+main(args) do
+  if args.empty?
+    Greet.hello
+  else
+    let name = args.first.try
+    Greet.greet(name)
+  end
+end

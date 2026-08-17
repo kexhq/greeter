@@ -1,0 +1,10 @@
+bundle "greeter" do
+  version("0.1.0")
+  description("Greet someone from the CLI, using the greet package")
+  kex(">= 0.3.0")
+  entrypoint("src/main.kex")
+
+  target("greeter", entrypoint: "src/main.kex")
+  
+  tey("greet", git: "https://github.com/kexhq/greet", tag: "~> 0.1")
+end
