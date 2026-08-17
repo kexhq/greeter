@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["**"]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out Kex for the setup-tey action
+        uses: actions/checkout@v4
+        with:
+          repository: kexhq/kex
+          ref: v0.3.4
+          path: kex
+
+      - uses: ./kex/.github/actions/setup-tey
+
+      - name: Install dependencies
+        run: tey install
+
+      - name: Build
+        run: tey build
+
+      - name: Test
+        run: tey test
