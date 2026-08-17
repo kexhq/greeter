@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: kexhq/kex/.github/actions/setup-tey@v0.3.4
+      - uses: kexhq/setup-tey@v1
 
       - name: Install dependencies
         run: tey install
