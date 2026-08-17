@@ -16,7 +16,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: kexhq/kex/.github/actions/setup-tey@v0.3.4
+      # kexhq/kex has dangling root symlinks (kex -> ./build/kex), which the
+      # runner's tarball extraction chokes on when resolving an action by
+      # `owner/repo/path@ref`. Checking the repo out sidesteps that.
+      - name: Check out Kex for the setup-tey action
+        uses: actions/checkout@v4
+        with:
+          repository: kexhq/kex
+          ref: v0.3.4
+          path: kex
+
+      # The action installs `erlang-base --no-install-recommends`, which omits
+      # the `crypto` application. `tey install` verifies every fetched
+      # dependency with Digest.sha256 -> crypto:hash/2, so it dies with
+      # `tey: undef`. A package with no dependencies never reaches that call,
+      # which is why kexhq/greet is green on the same action.
+      - name: Install Erlang
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends erlang-nox
+
+      - uses: ./kex/.github/actions/setup-tey
+        with:
+          erlang: false
 
       - name: Install dependencies
         run: tey install
