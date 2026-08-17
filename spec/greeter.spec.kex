@@ -1,0 +1,23 @@
+# The greeting as it actually reaches the terminal. `main` itself cannot be called
+# TODO: Fix this later
+using Greet
+
+describe "greeter" do
+  before do
+    Mock.IO.start()
+  end
+
+  after do
+    Mock.IO.stop()
+  end
+
+  it "greets the world when given no arguments" do
+    Greet.hello
+    Assert.equal(Mock.IO.output(), "Hello, World!\n")
+  end
+
+  it "greets by name when given one" do
+    Greet.greet("John")
+    Assert.equal(Mock.IO.output(), "Hello, John!\n")
+  end
+end
